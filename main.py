@@ -46,7 +46,6 @@ async def stats(ctx):
     member_count = guild.member_count
     text_channels = len(guild.text_channels)
     voice_channels = len(guild.voice_channels)
-    roles_count = len(guild.roles)
     created_at = guild.created_at.strftime("%Y-%m-%d")
 
     embed = discord.Embed(title=f"Server Stats: {name}", color=discord.Color.blue())
@@ -54,7 +53,6 @@ async def stats(ctx):
     embed.add_field(name="Members", value=member_count, inline=True)
     embed.add_field(name="Text Channels", value=text_channels, inline=True)
     embed.add_field(name="Voice Channels", value=voice_channels, inline=True)
-    embed.add_field(name="Roles", value=roles_count, inline=True)
     embed.set_footer(text=f"Created at: {created_at}")
 
     await ctx.send(embed=embed)
