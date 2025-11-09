@@ -25,7 +25,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    badWords = ('w9', 'qhaab', 'zaml')
+    badWords = ('w9')
     for badWord in badWords:
         if badWord in message.content.lower():
             await message.delete()
