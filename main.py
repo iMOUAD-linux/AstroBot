@@ -20,22 +20,23 @@ async def on_ready():
     print(f"Done, {bot.user.name}")
 
 
-@bot.event
+
+#    Events
+#Hellow
+bot.event
 async def on_message(message):
     if message.author == bot.user:
         return
 
-    badWords = ('w9')
-    for badWord in badWords:
-        if badWord in message.content.lower():
-            await message.delete()
-            await message.channel.send(f"{message.author.mention} - 🤫 Dont say that again!")
+    if message.content.lower() == "hello":
+        await message.channel.send("hi")
+
     await bot.process_commands(message)
 
-@bot.command()
-async def salam(ctx):
-    await ctx.send(f"salam o3alaykom {ctx.author.mention}!")
 
+
+#    COMMANDS
+#Server Stats
 @bot.command()
 async def stats(ctx):
     guild = ctx.guild
