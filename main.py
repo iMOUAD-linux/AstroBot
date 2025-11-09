@@ -23,7 +23,7 @@ async def on_ready():
 
 #    Events
 #Hellow
-bot.event
+@bot.event
 async def on_message(message):
     if message.author == bot.user:
         return
