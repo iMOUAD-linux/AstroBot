@@ -31,8 +31,6 @@ async def on_message(message):
     if message.content.lower() == "hello":
         await message.channel.send("hi")
 
-    await bot.process_commands(message)
-
 
 
 #    COMMANDS
