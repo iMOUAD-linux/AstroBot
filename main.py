@@ -30,7 +30,7 @@ async def on_message(message):
         if badWord in message.content.lower():
             await message.delete()
             await message.channel.send(f"{message.author.mention} - 🤫 Dont say that again!")
-
+    await bot.process_commands(message)
 
 @bot.command()
 async def salam(ctx):
