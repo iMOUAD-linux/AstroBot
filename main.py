@@ -22,16 +22,6 @@ async def on_ready():
 
 
 #    Events
-#Hellow
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
-
-    if message.content.lower() == "hello":
-        await message.channel.send("hi")
-
-
 
 #    COMMANDS
 #Server Stats
