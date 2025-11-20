@@ -306,11 +306,6 @@ async def send_daily_stats():
         inline=True
     )
     embed.add_field(
-        name="➤ 👑・Server Owner",
-        value=owner.mention,
-        inline=False
-    )
-    embed.add_field(
         name="➤ 📅・Server Age",
         value=f"{age_days} days old",
         inline=False
