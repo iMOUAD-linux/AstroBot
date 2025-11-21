@@ -373,7 +373,7 @@ class GameRoleView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
         for game in game_roles:
-            self.add_item(GameRoleButton(emoji=game["name"]))
+            self.add_item(GameRoleButton(emoji=game["name"], role_id=game["role_id"]))
 @bot.command()
 @commands.has_permissions(administrator=True)
 async def gameroles(ctx):
