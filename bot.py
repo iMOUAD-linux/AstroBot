@@ -345,7 +345,7 @@ game_roles = [
 ]
 class GameRoleButton(discord.ui.Button):
     def __init__(self, label, role_id):
-        super().__init__(label=label, style=discord.ButtonStyle.primary)
+        super().__init__(label=label, style=discord.ButtonStyle.secondary)
         self.role_id = role_id
     async def callback(self, interaction: discord.Interaction):
         role = interaction.guild.get_role(self.role_id)
@@ -373,7 +373,7 @@ class GameRoleView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
         for game in game_roles:
-            self.add_item(GameRoleButton(game["name"], game["name"], discord.ButtonStyle.success))
+            self.add_item(GameRoleButton(game["name"], game["name"]))
 @bot.command()
 @commands.has_permissions(administrator=True)
 async def gameroles(ctx):
