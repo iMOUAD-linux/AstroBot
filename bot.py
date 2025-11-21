@@ -93,6 +93,17 @@ async def serverstats(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=embed)
 
+#AVATAR
+@bot.tree.command(name="avatar", description="Show the avatar of a user")
+async def avatar(interaction: discord.Interaction, user: discord.Member = None):
+    user = user or interaction.user
+
+    embed = discord.Embed(color=0x2f3136)
+    embed.set_author(name=f"{user.name}'s Avatar")
+    embed.set_image(url=user.display_avatar.url)
+
+    await interaction.response.send_message(embed=embed)
+
 
 #---------------------Events---------------------
 
@@ -178,7 +189,19 @@ async def verifie(ctx, member: discord.Member):
         await log_channel.send(embed=embed)
 
 
+@bot.event
+async def on_message(message):
+    if message.author.bot:
+        return
 
+    if message.content.lower() == "a":
+        embed = discord.Embed(color=0x2f3136)
+        embed.set_author(name=f"{message.author.name}'s Avatar")
+        embed.set_image(url=message.author.display_avatar.url)
+
+        await message.channel.send(embed=embed)
+
+    await bot.process_commands(message)
 
 
 
