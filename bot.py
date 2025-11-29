@@ -134,6 +134,7 @@ async def on_message(message):
     await bot.process_commands(message)
 #message
 @bot.command()
+@commands.has_permissions(administrator=True)
 async def say(ctx, *, message: str):
     await ctx.message.delete()
     await ctx.send(message)
@@ -406,7 +407,7 @@ async def gameroles(ctx):
             "Click on the buttons below to claim or remove a role.\n\n"
             "**Choose the games you play!**"
         ),
-        color=0xFFFFF
+        color=0xFFFFFF
     )
     embed.set_thumbnail(url=ctx.guild.icon.url if ctx.guild.icon else None)
     # List roles in embed
