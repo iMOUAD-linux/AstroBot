@@ -255,6 +255,84 @@ async def on_member_join(member):
         )
     await channel.send(content=f"✦ **Everyone welcome {member.mention}!**", embed=embed)
 
+
+# Booster
+
+import io
+import aiohttp
+from PIL import Image, ImageDraw, ImageFont
+
+BACKGROUND_URL = "https://i.ibb.co/VW52nqdk/Aren-1.png"
+BOOST_ICON_URL = "https://cdn.iconscout.com/icon/free/png-256/free-level-3-discord-boost-icon-svg-download-png-5582634.png"
+
+async def generate_booster_card(display_name: str, booster: discord.Member, boosts: int = 1):
+    # --- Download background ---
+    async with aiohttp.ClientSession() as session:
+        async with session.get(BACKGROUND_URL) as resp:
+            bg_data = await resp.read()
+
+        async with session.get(BOOST_ICON_URL) as resp:
+            boost_icon_data = await resp.read()
+
+        async with session.get(str(booster.display_avatar.url)) as resp:
+            avatar_data = await resp.read()
+
+    bg = Image.open(io.BytesIO(bg_data)).convert("RGBA")
+    boost_icon = Image.open(io.BytesIO(boost_icon_data)).convert("RGBA")
+    avatar = Image.open(io.BytesIO(avatar_data)).convert("RGBA")
+
+    # --- Resize images ---
+    boost_icon = boost_icon.resize((140, 140))
+    avatar = avatar.resize((230, 230))
+
+    # --- Circular avatar ---
+    mask = Image.new("L", (230, 230), 0)
+    ImageDraw.Draw(mask).ellipse((0, 0, 230, 230), fill=255)
+    avatar_circle = Image.new("RGBA", (230, 230))
+    avatar_circle.paste(avatar, (0, 0), mask)
+
+    draw = ImageDraw.Draw(bg)
+
+    # --- Fonts ---
+    title_font = ImageFont.truetype("arial.ttf", 60)
+    medium_font = ImageFont.truetype("arial.ttf", 45)
+    small_font = ImageFont.truetype("arial.ttf", 38)
+
+    # --- Text ---
+    draw.text((400, 40), "ARENA BOOSTERS", fill="white", font=title_font, anchor="mm")
+    draw.text((400, 300), "The server was successfully boosted By", fill="white", font=medium_font, anchor="mm")
+    draw.text((400, 360), f"“{display_name}”", fill="white", font=title_font, anchor="mm")
+    draw.text((400, 500), f"+ “{boosts}” The Number Of Boosts", fill="white", font=medium_font, anchor="mm")
+    draw.text((400, 690), "You can claim now 3000xp and @Bourgeois role, thank you for boosting",
+              fill="white", font=small_font, anchor="mm")
+
+    # --- Place images ---
+    bg.paste(avatar_circle, (285, 120), avatar_circle)
+    bg.paste(boost_icon, (330, 380), boost_icon)
+    # --- Output as PNG ---
+    buffer = io.BytesIO()
+    bg.save(buffer, "PNG")
+    buffer.seek(0)
+    return discord.File(buffer, filename="booster_card.png")
+
+@bot.event
+async def on_member_update(before, after):
+    # Detect new booster
+    if before.premium_since is None and after.premium_since is not None:
+
+        booster_log_channel = after.guild.get_channel(1436708798227025970)
+
+        from booster_card import generate_booster_card  # or skip if in same file
+
+        file = await generate_booster_card(
+            display_name=after.display_name,
+            booster=after,
+            boosts=len(after.guild.premium_subscribers)
+        )
+        await booster_log_channel.send(file=file)
+
+
+
 #---------------------Bot commands---------------------
 
 
