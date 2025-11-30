@@ -93,16 +93,6 @@ async def serverstats(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=embed)
 
-#AVATAR
-@bot.tree.command(name="avatar", description="Show the avatar of a user")
-async def avatar(interaction: discord.Interaction, user: discord.Member = None):
-    user = user or interaction.user
-
-    embed = discord.Embed(color=0x2f3136)
-    embed.set_author(name=f"{user.name}'s Avatar")
-    embed.set_image(url=user.display_avatar.url)
-
-    await interaction.response.send_message(embed=embed)
 
 
 #---------------------Events---------------------
@@ -495,5 +485,99 @@ async def gameroles(ctx):
         text += f"{game['name']} → {role.mention if role else '`Unknown role`'}\n"
     embed.add_field(name="Available Game Roles", value=text, inline=False)
     await ctx.send(embed=embed, view=GameRoleView())
+
+
+
+
+# AVATARS
+import json
+import os
+from datetime import datetime, timedelta
+# 🟦 SET THIS — The channel where +givexp commands will be sent
+XP_CHANNEL_ID = 1437487204019601519   # <── replace
+XP_VALUES = {
+    "1★": 10,
+    "2★": 20,
+    "2★": 30,
+    "4★": 40,
+    "5★": 50,
+}
+ALLOWED_REACTIONS = list(XP_VALUES.keys())
+if not os.path.exists("avatar_data.json"):
+    with open("avatar_data.json", "w") as f:
+        json.dump({"posts": {}, "cooldowns": {}}, f, indent=4)
+# Load & Save
+def load_data():
+    with open("avatar_data.json", "r") as f:
+        return json.load(f)
+def save_data(data):
+    with open("avatar_data.json", "w") as f:
+        json.dump(data, f, indent=4)
+#  Trigger: "a" or "avatar"
+@bot.event
+async def on_message(message: discord.Message):
+    if message.author.bot:
+        return
+    content = message.content.lower().strip()
+    if content in ["a", "avatar"]:
+        embed = discord.Embed(
+            title=f"{message.author.display_name}'s Avatar",
+            description="Rating this avatar will earn you XP\n    5★:**50xp** ; 4★:**40xp** ; 3★:**30xp** ; 2★:**20xp** ; 1★:**10xp**",
+            color=0xFFFFFF
+        )
+        embed.set_image(url=message.author.display_avatar.url)
+        embed.set_footer(text="✦ 𝕸 𝕺 𝖀 𝕬 𝕯'Style")
+        avatar_msg = await message.channel.send(embed=embed)
+        # Add 1★ → 5★ reactions
+        for reaction in ALLOWED_REACTIONS:
+            await avatar_msg.add_reaction(reaction)
+        # Save message → owner
+        data = load_data()
+        data["posts"][str(avatar_msg.id)] = {
+            "author": message.author.id,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        save_data(data)
+    await bot.process_commands(message)
+#  Reaction Handler
+@bot.event
+async def on_reaction_add(reaction, user):
+    if user.bot:
+        return
+    msg = reaction.message
+    data = load_data()
+    # Not an avatar message → ignore
+    if str(msg.id) not in data["posts"]:
+        return
+    post_info = data["posts"][str(msg.id)]
+    owner_id = post_info["author"]
+    # Invalid reaction
+    if reaction.emoji not in ALLOWED_REACTIONS:
+        await reaction.remove(user)
+        return
+    # They cannot react to themselves
+    if user.id == owner_id:
+        await reaction.remove(user)
+        return
+    # Anti-spam: 1 reaction per week per user-pair
+    pair_key = f"{owner_id}:{user.id}"
+    if pair_key in data["cooldowns"]:
+        last_time = datetime.fromisoformat(data["cooldowns"][pair_key])
+        if datetime.utcnow() < last_time + timedelta(days=7):
+            return  # still on cooldown
+    # XP amount
+    xp_amount = XP_VALUES[reaction.emoji]
+    owner = msg.guild.get_member(owner_id)
+    # 🟦 SEND XP COMMAND TO SPECIFIC CHANNEL
+    xp_channel = bot.get_channel(XP_CHANNEL_ID)
+    if xp_channel is not None:
+        await xp_channel.send(f"+givexp {owner.mention} {xp_amount}")
+    # Update cooldown
+    data["cooldowns"][pair_key] = datetime.utcnow().isoformat()
+    save_data(data)
+    # Feedback in the avatar channel
+    await msg.channel.send(
+        f"⭐ {owner.display_name} has been awarded **{xp_amount} XP**!"
+    )
 
 bot.run(token)
