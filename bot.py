@@ -522,12 +522,12 @@ async def on_message(message: discord.Message):
     if content in ["a", "avatar"]:
         embed = discord.Embed(
             title=f"{message.author.display_name}'s Avatar",
-            description=f"l3dad dnjom likatkhod howa l3dad l Xp liKatrb7 {message.author.mention}",
+            description=f"{message.author.mention}, Rating this avatar will earn you XP, This will increase your rating on the server.",
             color=0xFFFFFF
         )
         embed.set_image(url=message.author.display_avatar.url)
         embed.set_thumbnail(url=message.author.display_avatar.url)
-        embed.set_footer(text="✦ 𝕸 𝕺 𝖀 𝕬 𝕯'Style")
+        embed.set_footer(text="Arena Community Avatar・𝕸 𝕺 𝖀 𝕬 𝕯'Style")
         avatar_msg = await message.channel.send(embed=embed)
         # Add 1★ → 5★ reactions
         for reaction in ALLOWED_REACTIONS:
