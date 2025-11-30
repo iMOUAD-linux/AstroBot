@@ -526,7 +526,7 @@ async def on_message(message: discord.Message):
             color=0xFFFFFF
         )
         embed.set_image(url=message.author.display_avatar.url)
-        embed.set_thumbnail(url=member.display_avatar.url)
+        embed.set_thumbnail(url=message.author.display_avatar.url)
         embed.set_footer(text="✦ 𝕸 𝕺 𝖀 𝕬 𝕯'Style")
         avatar_msg = await message.channel.send(embed=embed)
         # Add 1★ → 5★ reactions
