@@ -496,11 +496,11 @@ from datetime import datetime, timedelta
 # 🟦 SET THIS — The channel where +givexp commands will be sent
 XP_CHANNEL_ID = 1437487204019601519   # <── replace
 XP_VALUES = {
-    "⭐": 10,   # 1 star
-    "✨": 20,   # 2 stars
-    "💫": 30,   # 3 stars
-    "🌟": 40,   # 4 stars
-    "🔥": 50,   # 5 stars
+    "1️⃣": 10,   # 1 star
+    "2️⃣": 20,   # 2 stars
+    "3️⃣": 30,   # 3 stars
+    "4️⃣": 40,   # 4 stars
+    "5️⃣": 50,   # 5 stars
 }
 ALLOWED_REACTIONS = list(XP_VALUES.keys())
 if not os.path.exists("avatar_data.json"):
@@ -522,9 +522,14 @@ async def on_message(message: discord.Message):
     if content in ["a", "avatar"]:
         embed = discord.Embed(
             title=f"{message.author.display_name}'s Avatar",
-            description="Rating this avatar will earn you XP\n    🔥:**50xp** ; 🌟:**40xp** ; 💫:**30xp** ; ✨:**20xp** ; ⭐:**10xp**",
+            description="Rating this avatar will earn you XP",
             color=0xFFFFFF
         )
+        embed.add_field(name="1️⃣", value="**10xp**", inline=False)
+        embed.add_field(name="2️⃣", value="**20xp**", inline=True)
+        embed.add_field(name="3️⃣", value="**30xp**", inline=False)
+        embed.add_field(name="4️⃣", value="**40xp**", inline=True)
+        embed.add_field(name="5️⃣", value="**50xp**", inline=False)
         embed.set_image(url=message.author.display_avatar.url)
         embed.set_thumbnail(url=message.author.display_avatar.url)
         embed.set_footer(text="✦ 𝕸 𝕺 𝖀 𝕬 𝕯'Style")
@@ -576,9 +581,5 @@ async def on_reaction_add(reaction, user):
     # Update cooldown
     data["cooldowns"][pair_key] = datetime.utcnow().isoformat()
     save_data(data)
-    # Feedback in the avatar channel
-    await msg.channel.send(
-        f"⭐ {owner.display_name} has been awarded **{xp_amount} XP**!"
-    )
 
 bot.run(token)
