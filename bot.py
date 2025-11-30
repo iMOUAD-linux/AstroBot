@@ -522,14 +522,9 @@ async def on_message(message: discord.Message):
     if content in ["a", "avatar"]:
         embed = discord.Embed(
             title=f"{message.author.display_name}'s Avatar",
-            description="Rating this avatar will earn you XP",
+            description="Rating this avatar will earn you XP\n1️⃣:**10xp**・2️⃣:**20xp**・3️⃣:**30xp**・4️⃣:**40xp**・5️⃣:**50xp**・",
             color=0xFFFFFF
         )
-        embed.add_field(name="1️⃣", value="**10xp**")
-        embed.add_field(name="2️⃣", value="**20xp**")
-        embed.add_field(name="3️⃣", value="**30xp**")
-        embed.add_field(name="4️⃣", value="**40xp**")
-        embed.add_field(name="5️⃣", value="**50xp**")
         embed.set_image(url=message.author.display_avatar.url)
         embed.set_footer(text="✦ 𝕸 𝕺 𝖀 𝕬 𝕯'Style")
         avatar_msg = await message.channel.send(embed=embed)
