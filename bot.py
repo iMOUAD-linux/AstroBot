@@ -498,9 +498,9 @@ XP_CHANNEL_ID = 1437487204019601519   # <── replace
 XP_VALUES = {
     "⭐": 10,   # 1 star
     "✨": 20,   # 2 stars
-    "🌟🌟": 30,   # 3 stars
-    "💫💫": 40,   # 4 stars
-    "🔥🔥🔥": 50,   # 5 stars
+    "💫": 30,   # 3 stars
+    "🌟": 40,   # 4 stars
+    "🔥": 50,   # 5 stars
 }
 ALLOWED_REACTIONS = list(XP_VALUES.keys())
 if not os.path.exists("avatar_data.json"):
@@ -522,7 +522,7 @@ async def on_message(message: discord.Message):
     if content in ["a", "avatar"]:
         embed = discord.Embed(
             title=f"{message.author.display_name}'s Avatar",
-            description="Rating this avatar will earn you XP\n    🔥:**50xp** ; 💫:**40xp** ; 🌟:**30xp** ; ✨:**20xp** ; ⭐:**10xp**",
+            description="Rating this avatar will earn you XP\n    🔥:**50xp** ; 🌟:**40xp** ; 💫:**30xp** ; ✨:**20xp** ; ⭐:**10xp**",
             color=0xFFFFFF
         )
         embed.set_image(url=message.author.display_avatar.url)
