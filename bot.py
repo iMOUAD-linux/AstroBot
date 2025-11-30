@@ -496,11 +496,11 @@ from datetime import datetime, timedelta
 # 🟦 SET THIS — The channel where +givexp commands will be sent
 XP_CHANNEL_ID = 1437487204019601519   # <── replace
 XP_VALUES = {
-    "1★": 10,
-    "2★": 20,
-    "2★": 30,
-    "4★": 40,
-    "5★": 50,
+    "⭐": 10,   # 1 star
+    "✨": 20,   # 2 stars
+    "🌟🌟": 30,   # 3 stars
+    "💫💫": 40,   # 4 stars
+    "🔥🔥🔥": 50,   # 5 stars
 }
 ALLOWED_REACTIONS = list(XP_VALUES.keys())
 if not os.path.exists("avatar_data.json"):
@@ -522,10 +522,11 @@ async def on_message(message: discord.Message):
     if content in ["a", "avatar"]:
         embed = discord.Embed(
             title=f"{message.author.display_name}'s Avatar",
-            description="Rating this avatar will earn you XP\n    5★:**50xp** ; 4★:**40xp** ; 3★:**30xp** ; 2★:**20xp** ; 1★:**10xp**",
+            description="Rating this avatar will earn you XP\n    🔥:**50xp** ; 💫:**40xp** ; 🌟:**30xp** ; ✨:**20xp** ; ⭐:**10xp**",
             color=0xFFFFFF
         )
         embed.set_image(url=message.author.display_avatar.url)
+        embed.set_thumbnail(url=member.display_avatar.url)
         embed.set_footer(text="✦ 𝕸 𝕺 𝖀 𝕬 𝕯'Style")
         avatar_msg = await message.channel.send(embed=embed)
         # Add 1★ → 5★ reactions
