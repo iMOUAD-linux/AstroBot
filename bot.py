@@ -525,11 +525,11 @@ async def on_message(message: discord.Message):
             description="Rating this avatar will earn you XP",
             color=0xFFFFFF
         )
-        embed.add_field(name="1️⃣", value="**10xp**", inline=False)
-        embed.add_field(name="2️⃣", value="**20xp**", inline=True)
-        embed.add_field(name="3️⃣", value="**30xp**", inline=False)
-        embed.add_field(name="4️⃣", value="**40xp**", inline=True)
-        embed.add_field(name="5️⃣", value="**50xp**", inline=False)
+        embed.add_field(name="1️⃣", value="**10xp**")
+        embed.add_field(name="2️⃣", value="**20xp**")
+        embed.add_field(name="3️⃣", value="**30xp**")
+        embed.add_field(name="4️⃣", value="**40xp**")
+        embed.add_field(name="5️⃣", value="**50xp**")
         embed.set_image(url=message.author.display_avatar.url)
         embed.set_thumbnail(url=message.author.display_avatar.url)
         embed.set_footer(text="✦ 𝕸 𝕺 𝖀 𝕬 𝕯'Style")
