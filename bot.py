@@ -531,7 +531,6 @@ async def on_message(message: discord.Message):
         embed.add_field(name="4️⃣", value="**40xp**")
         embed.add_field(name="5️⃣", value="**50xp**")
         embed.set_image(url=message.author.display_avatar.url)
-        embed.set_thumbnail(url=message.author.display_avatar.url)
         embed.set_footer(text="✦ 𝕸 𝕺 𝖀 𝕬 𝕯'Style")
         avatar_msg = await message.channel.send(embed=embed)
         # Add 1★ → 5★ reactions
