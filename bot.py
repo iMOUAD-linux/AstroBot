@@ -167,13 +167,25 @@ async def verifie(ctx, member: discord.Member):
     militesRole = member.guild.get_role(1438581142394503189)
     if militesRole:
         await member.add_roles(militesRole)
+        militesChannel = ctx.guild.get_channel(1446215547036635440)
+        if militesChannel:
+            embed = discord.Embed(
+                title="**Milites**'s Guide",
+                description ="This is what you need to do as a **Milite** on ARENA."
+                color=discord.Color.blue()
+            )
+            embed.add_field(name="1. Understanding Arena Leveling", value="Arena Leveling is a system that ranks members according to their activity", inline=False)
+            embed.add_field(name="2. Complete Tasks", value=f"Complete the tasks to level up, You can get the tasks here : {bot.get_channel(1444259444199260282).mention}", inline=False)
+            embed.add_field(name="3. Rise to Warrior", value=f"Claim 1000xp to be a {discord.utils.get(ctx.guild.roles, id=1438574168269525105).mention}, This makes you an official combatant in our **ARENA**.", inline=False)
+            embed.set_thumbnail(url=member.display_avatar.url)
+        await militesChannel.send(embed=embed)
     await ctx.reply(f"✔ {member.mention} has been **verified successfully!**")
     # ----- LOG ACTION -----
     log_channel = ctx.guild.get_channel(LOG_CHANNEL_ID)
     if log_channel:
         embed = discord.Embed(
             title="🔰 Member Verified",
-            color=discord.Color.green()
+            color=0x206694
         )
         embed.add_field(name="👤 Verified Member", value=member.mention, inline=False)
         embed.add_field(name="🛡 Verified By", value=author.mention, inline=False)
