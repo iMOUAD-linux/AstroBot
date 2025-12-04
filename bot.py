@@ -564,7 +564,7 @@ async def on_reaction_add(reaction, user):
     pair_key = f"{owner_id}:{user.id}"
     if pair_key in data["cooldowns"]:
         last_time = datetime.fromisoformat(data["cooldowns"][pair_key])
-        if datetime.utcnow() < last_time + timedelta(days=7):
+        if datetime.utcnow() < last_time + timedelta(days=1):
             return  # still on cooldown
     # XP amount
     xp_amount = XP_VALUES[reaction.emoji]
