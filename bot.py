@@ -171,7 +171,7 @@ async def verifie(ctx, member: discord.Member):
         if militesChannel:
             embed = discord.Embed(
                 title="**Milites**'s Guide",
-                description ="This is what you need to do as a **Milite** on ARENA."
+                description="This is what you need to do as a **Milite** on ARENA.",
                 color=discord.Color.blue()
             )
             embed.add_field(name="1. Understanding Arena Leveling", value="Arena Leveling is a system that ranks members according to their activity", inline=False)
