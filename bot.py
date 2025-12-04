@@ -164,6 +164,9 @@ async def verifie(ctx, member: discord.Member):
         await member.remove_roles(unverified_role)
     # ----- Add verified -----
     await member.add_roles(verified_role)
+    militesRole = member.guild.get_role(1438581142394503189)
+    if militesRole:
+        await member.add_roles(militesRole)
     await ctx.reply(f"✔ {member.mention} has been **verified successfully!**")
     # ----- LOG ACTION -----
     log_channel = ctx.guild.get_channel(LOG_CHANNEL_ID)
