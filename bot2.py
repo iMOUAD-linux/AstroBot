@@ -4,7 +4,7 @@ from discord.ext import commands
 from discord import app_commands
 from dotenv import load_dotenv
 from discord.ui import View, button
-
+import os
 #import main.py
 
 load_dotenv()
