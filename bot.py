@@ -50,8 +50,6 @@ from dotenv import load_dotenv
 import os
 from datetime import timezone, datetime
 
-import bot2.py
-
 
 load_dotenv()
 token = os.getenv('TOKEN')
@@ -403,3 +401,5 @@ async def gameroles(ctx):
     await ctx.send(embed=embed, view=GameRoleView())
 
 bot.run(token)
+
+import bot2.py
