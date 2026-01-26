@@ -8,7 +8,7 @@ from discord.ui import View, button
 #import main.py
 
 load_dotenv()
-TOKEN = os.getenv("DISCORD_TOKEN")
+TOKEN = os.getenv("DISCORD_TOKEN_TEMP")
 
 intents = discord.Intents.default()
 intents.voice_states = True
