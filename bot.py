@@ -50,6 +50,8 @@ from dotenv import load_dotenv
 import os
 from datetime import timezone, datetime
 
+import bot2.py
+
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
