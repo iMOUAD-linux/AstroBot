@@ -1,4 +1,4 @@
-import bot2.py
+
 
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import threading
@@ -402,3 +402,5 @@ async def gameroles(ctx):
     await ctx.send(embed=embed, view=GameRoleView())
 
 bot.run(token)
+
+import bot2.py
