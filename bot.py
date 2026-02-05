@@ -1,3 +1,5 @@
+import bot2.py
+
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import threading
 import os
@@ -49,8 +51,6 @@ from dotenv import load_dotenv
 #import asyncio
 import os
 from datetime import timezone, datetime
-
-import bot2.py
 
 load_dotenv()
 token = os.getenv('TOKEN')
