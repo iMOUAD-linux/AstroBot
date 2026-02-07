@@ -49,6 +49,7 @@ import time
 
 subprocess.Popen([sys.executable, "bot.py"])
 subprocess.Popen([sys.executable, "bot2.py"])
+subprocess.Popen([sys.executable, "bot3.py"])
 
 # keep the app alive so Koyeb doesn't stop it
 while True:
