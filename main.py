@@ -43,6 +43,13 @@ def keep_alive():
         time.sleep(240)
 threading.Thread(target=keep_alive, daemon=True).start()
 
+import subprocess
+import sys
+import time
 
-import bot.py
-import bot2.py
+subprocess.Popen([sys.executable, "bot.py"])
+subprocess.Popen([sys.executable, "bot2.py"])
+
+# keep the app alive so Koyeb doesn't stop it
+while True:
+    time.sleep(60)
